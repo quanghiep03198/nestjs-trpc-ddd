@@ -16,6 +16,7 @@
 				"swcrcPath": "infrastructure/.swcrc"
 			}
 		},
+		"typeCheck": false,
 		"tsConfigPath": "tsconfig.build.json",
 		"watchAssets": false
 	}

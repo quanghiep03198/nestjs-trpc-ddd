@@ -1,3 +1,5 @@
 onlyBuiltDependencies:
+  - '@compodoc/compodoc'
   - '@nestjs/core'
   - '@swc/core'
+  - bcrypt

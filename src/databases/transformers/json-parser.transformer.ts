@@ -1,4 +1,4 @@
-import { SuperJson } from '@/common/libs'
+import { DeepJson } from '@/common/libs'
 import { ValueTransformer } from 'typeorm'
 
 export type Bit = 0 | 1
@@ -6,10 +6,10 @@ export type Bit = 0 | 1
 export class JsonParserTransformer<T> implements ValueTransformer {
 	// To db from typeorm
 	public from(value?: string | null): T | Array<T> {
-		return SuperJson.parse<T>(value)
+		return DeepJson.parse<T>(value)
 	}
 
 	public to(value?: string): string {
-		return SuperJson.stringify(value)
+		return DeepJson.stringify(value)
 	}
 }

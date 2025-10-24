@@ -1,13 +1,13 @@
-// import { UserEntity } from '@/modules/user/entities/user.entity'
-// import { createParamDecorator, ExecutionContext } from '@nestjs/common'
+import { UserEntity } from '@/modules/user/infrastructure/entities/user.entity'
+import { createParamDecorator, ExecutionContext } from '@nestjs/common'
 
-// export const User = createParamDecorator(
-// 	(property: Exclude<keyof UserEntity, 'authenticate'>, ctx: ExecutionContext) => {
-// 		const request = ctx.switchToHttp().getRequest()
-// 		const user = request.user
-// 		if (!user) {
-// 			return null
-// 		}
-// 		return property ? user[property] : user
-// 	}
-// )
+export const User = createParamDecorator(
+	(property: Exclude<keyof UserEntity, 'authenticate'>, ctx: ExecutionContext) => {
+		const request = ctx.switchToHttp().getRequest()
+		const user = request.user
+		if (!user) {
+			return null
+		}
+		return property ? user[property] : user
+	}
+)

@@ -1,42 +1,42 @@
-// import { PluralI18nPath, ResponseMessageKey } from '@/common/decorators/response-message.decorator'
-// import { I18nPath } from '@/generated/i18n.generated'
-// import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
-// import { HttpAdapterHost, Reflector } from '@nestjs/core'
-// import { format } from 'date-fns'
-// import { I18nContext, I18nService } from 'nestjs-i18n'
-// import { Observable } from 'rxjs'
-// import { map } from 'rxjs/operators'
+import { PluralI18nPath, ResponseMessageKey } from '@/common/decorators/response-message.decorator'
+// import { I18nPath } from '@/i18n/i18n.generated'
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
+import { HttpAdapterHost, Reflector } from '@nestjs/core'
+import { format } from 'date-fns'
+import { I18nContext, I18nService } from 'nestjs-i18n'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 
-// export interface Response<T> {
-// 	metadata: T
-// }
+export interface Response<T> {
+	metadata: T
+}
 
-// @Injectable()
-// export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> {
-// 	constructor(
-// 		private readonly reflector: Reflector,
-// 		private readonly httpAdapterHost: HttpAdapterHost,
-// 		private readonly i18nService: I18nService
-// 	) {}
+@Injectable()
+export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> {
+	constructor(
+		private readonly reflector: Reflector,
+		private readonly httpAdapterHost: HttpAdapterHost,
+		private readonly i18nService: I18nService
+	) {}
 
-// 	intercept(context: ExecutionContext, next: CallHandler): Observable<Response<T>> {
-// 		const responseMessage =
-// 			this.reflector.get<string | PluralI18nPath | I18nPath>(ResponseMessageKey, context.getHandler()) ?? ''
-// 		const { httpAdapter } = this.httpAdapterHost
-// 		const message = typeof responseMessage === 'string' ? responseMessage : responseMessage.i18nKey
-// 		const messageBindings = typeof responseMessage === 'string' ? {} : responseMessage.bindings
-// 		return next.handle().pipe(
-// 			map((metadata) => ({
-// 				metadata,
-// 				statusCode: context.switchToHttp().getResponse().statusCode,
-// 				message: this.i18nService.t(message, {
-// 					lang: I18nContext.current().lang,
-// 					defaultValue: message,
-// 					...messageBindings
-// 				}),
-// 				timestamp: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-// 				path: httpAdapter.getRequestUrl(context.switchToHttp().getRequest())
-// 			}))
-// 		)
-// 	}
-// }
+	intercept(context: ExecutionContext, next: CallHandler): Observable<Response<T>> {
+		const responseMessage =
+			this.reflector.get<string | PluralI18nPath>(ResponseMessageKey, context.getHandler()) ?? ''
+		const { httpAdapter } = this.httpAdapterHost
+		const message = typeof responseMessage === 'string' ? responseMessage : responseMessage.i18nKey
+		const messageBindings = typeof responseMessage === 'string' ? {} : responseMessage.bindings
+		return next.handle().pipe(
+			map((metadata) => ({
+				metadata,
+				statusCode: context.switchToHttp().getResponse().statusCode,
+				message: this.i18nService.t(message, {
+					lang: I18nContext.current().lang,
+					defaultValue: message,
+					...messageBindings
+				}),
+				timestamp: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+				path: httpAdapter.getRequestUrl(context.switchToHttp().getRequest())
+			}))
+		)
+	}
+}
