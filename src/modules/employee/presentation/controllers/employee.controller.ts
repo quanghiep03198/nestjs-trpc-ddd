@@ -41,7 +41,7 @@ export class EmployeeController {
 		@Param('employeeCode') employeeCode: string,
 		@Body(new ZodValidationPipe(updateEmployeeProfileDto)) update: UpdateEmployeeProfileDto
 	) {
-		return await this.commandBus.execute(new UpdateEmployeeProfileCommand(update))
+		return await this.commandBus.execute(new UpdateEmployeeProfileCommand({ ...update, employee_code: employeeCode }))
 	}
 
 	@Route({

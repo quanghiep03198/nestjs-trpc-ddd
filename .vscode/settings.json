@@ -1,19 +1,17 @@
 {
 	"files.readonlyInclude": {
 		"**/i18n.generated.ts": true,
-		"src/trpc/generated/server.ts": true,
 		"pnpm-lock.yaml": true
 	},
 	"files.watcherExclude": {
 		"**/i18n.generated.ts": true,
-		"src/trpc/generated/server.ts": true,
 		"pnpm-lock.yaml": true
 	},
 	"search.exclude": {
 		"**/i18n.generated.ts": true,
-		"src/trpc/generated/server.ts": true,
 		"pnpm-lock.yaml": true
 	},
+
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
 	"editor.tabSize": 3

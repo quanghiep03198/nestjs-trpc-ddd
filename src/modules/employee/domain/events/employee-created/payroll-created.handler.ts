@@ -6,7 +6,7 @@ export class PayrollCreatedHandler implements IEventHandler<EmployeeCreatedEvent
 	async handle({ createdEmployee }: EmployeeCreatedEvent) {
 		await Promise.resolve(
 			setTimeout(() => {
-				console.log(`✅ Tạo bảng lương cơ bản cho nhân viên: ${createdEmployee.employee_code} `)
+				console.log(`Tạo bảng lương cơ bản cho nhân viên: ${createdEmployee.employee_code} `)
 			}, 1000)
 		)
 	}

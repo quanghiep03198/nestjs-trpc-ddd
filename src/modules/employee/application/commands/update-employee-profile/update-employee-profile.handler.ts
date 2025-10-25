@@ -1,6 +1,6 @@
 import { DATA_SOURCE_SYSCLOUD } from '@/databases/constants'
-import { EmployeeDomainModel } from '@/example/domain/models/employee.model'
-import { EmployeeEntity } from '@/example/infrastructure/entities/employee.orm.entity'
+import { EmployeeDomainModel } from '@/modules/employee/domain/models/employee.model'
+import { EmployeeEntity } from '@/modules/employee/infrastructure/entities'
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'

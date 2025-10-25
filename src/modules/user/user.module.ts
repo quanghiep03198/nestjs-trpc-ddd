@@ -1,11 +1,17 @@
 import { DATA_SOURCE_SYSCLOUD } from '@/databases/constants'
-import { Module } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
+import { CqrsModule } from '@nestjs/cqrs'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { UserService } from './domain/services/user.service'
-import { UserEntity } from './infrastructure/entities/user.entity'
+import { UserCommandHandlers } from './application/commands'
+import { UserQueryHandlers } from './application/queries'
+import { UserEntity } from './infrastructure/entities'
+import { UserController } from './presentation/controllers/user.controller'
 
+@Global()
 @Module({
-	imports: [TypeOrmModule.forFeature([UserEntity], DATA_SOURCE_SYSCLOUD)],
-	providers: [UserService]
+	imports: [TypeOrmModule.forFeature([UserEntity], DATA_SOURCE_SYSCLOUD), CqrsModule],
+	controllers: [UserController],
+	providers: [...UserQueryHandlers, ...UserCommandHandlers],
+	exports: [...UserQueryHandlers, ...UserCommandHandlers]
 })
 export class UserModule {}

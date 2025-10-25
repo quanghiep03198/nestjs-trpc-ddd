@@ -1,6 +1,6 @@
-import { DeleteEmployeeDto } from '@/example/application/dto/delete-employee.dto'
-import { EmployeeEntity } from '@/example/infrastructure/entities/employee.orm.entity'
 import { AggregateRoot } from '@nestjs/cqrs'
+import { DeleteEmployeeDto } from '../../application/dto/delete-employee.dto'
+import { EmployeeEntity } from '../../infrastructure/entities'
 import { EmployeeCreatedEvent } from '../events/employee-created/employee-created.event'
 import { EmployeeDeletedEvent } from '../events/employee-deleted/employee-deleted.event'
 import { EmployeeProfileUpdatedEvent } from '../events/employee-profile-updated/employee-profile-updated.event'

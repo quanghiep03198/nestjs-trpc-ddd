@@ -6,10 +6,7 @@ import { IResponseBody } from '../helpers/transform-response.helper'
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-	constructor(
-		private readonly logger: Logger,
-		private readonly httpAdapterHost: HttpAdapterHost
-	) {}
+	constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
 
 	/**
 	 *	@description Catch all exceptions and log the error
@@ -28,7 +25,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 			timestamp: new Date().toISOString(),
 			path: httpAdapter.getRequestUrl(ctx.getRequest())
 		}
-		if (httpStatus === HttpStatus.INTERNAL_SERVER_ERROR) this.logger.error(exception)
+		if (httpStatus === HttpStatus.INTERNAL_SERVER_ERROR) Logger.error(exception)
 		httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus)
 	}
 }

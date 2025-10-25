@@ -1,0 +1,118 @@
+{
+	"employee:create": {
+		"name": "Tạo nhân viên",
+		"description": "Thêm nhân viên mới vào hệ thống"
+	},
+	"employee:read": {
+		"name": "Xem thông tin nhân viên",
+		"description": "Xem danh sách và chi tiết nhân viên"
+	},
+	"employee:update": {
+		"name": "Cập nhật nhân viên",
+		"description": "Chỉnh sửa thông tin nhân viên"
+	},
+	"employee:delete": {
+		"name": "Xóa nhân viên",
+		"description": "Xóa nhân viên khỏi hệ thống"
+	},
+	"employee:export": {
+		"name": "Xuất danh sách nhân viên",
+		"description": "Xuất dữ liệu nhân viên ra Excel/CSV"
+	},
+	"department:create": {
+		"name": "Tạo phòng ban",
+		"description": "Thêm mới phòng ban"
+	},
+	"department:read": {
+		"name": "Xem phòng ban",
+		"description": "Xem danh sách phòng ban"
+	},
+	"department:update": {
+		"name": "Cập nhật phòng ban",
+		"description": "Chỉnh sửa thông tin phòng ban"
+	},
+	"department:delete": {
+		"name": "Xóa phòng ban",
+		"description": "Xóa phòng ban khỏi hệ thống"
+	},
+	"user:create": {
+		"name": "Tạo tài khoản",
+		"description": "Tạo tài khoản đăng nhập mới"
+	},
+	"user:read": {
+		"name": "Xem tài khoản",
+		"description": "Xem danh sách tài khoản"
+	},
+	"user:update": {
+		"name": "Cập nhật tài khoản",
+		"description": "Chỉnh sửa thông tin tài khoản"
+	},
+	"user:delete": {
+		"name": "Xóa tài khoản",
+		"description": "Xóa tài khoản khỏi hệ thống"
+	},
+	"role:assign": {
+		"name": "Gán vai trò",
+		"description": "Gán vai trò cho người dùng"
+	},
+	"role:revoke": {
+		"name": "Thu hồi vai trò",
+		"description": "Thu hồi vai trò của người dùng"
+	},
+	"role:create": {
+		"name": "Tạo vai trò",
+		"description": "Tạo vai trò mới"
+	},
+	"role:update": {
+		"name": "Cập nhật vai trò",
+		"description": "Chỉnh sửa vai trò"
+	},
+	"attendance:create": {
+		"name": "Chấm công",
+		"description": "Tạo bản ghi chấm công"
+	},
+	"attendance:read": {
+		"name": "Xem chấm công",
+		"description": "Xem dữ liệu chấm công"
+	},
+	"attendance:update": {
+		"name": "Sửa chấm công",
+		"description": "Chỉnh sửa dữ liệu chấm công"
+	},
+	"attendance:approve": {
+		"name": "Duyệt chấm công",
+		"description": "Phê duyệt dữ liệu chấm công"
+	},
+	"attendance:export": {
+		"name": "Xuất dữ liệu chấm công",
+		"description": "Xuất dữ liệu chấm công ra file"
+	},
+	"payroll:create": {
+		"name": "Tạo bảng lương",
+		"description": "Tạo bảng lương tháng"
+	},
+	"payroll:read": {
+		"name": "Xem bảng lương",
+		"description": "Xem dữ liệu bảng lương"
+	},
+	"payroll:update": {
+		"name": "Sửa bảng lương",
+		"description": "Chỉnh sửa bảng lương"
+	},
+	"payroll:approve": {
+		"name": "Duyệt bảng lương",
+		"description": "Phê duyệt bảng lương"
+	},
+	"payroll:export": {
+		"name": "Xuất bảng lương",
+		"description": "Xuất dữ liệu bảng lương ra file"
+	},
+	"report:view": {
+		"name": "Xem báo cáo",
+		"description": "Xem các báo cáo thống kê"
+	},
+	"report:export": {
+		"name": "Xuất báo cáo",
+		"description": "Xuất báo cáo ra file"
+	}
+}

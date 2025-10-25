@@ -1,0 +1,55 @@
+import { Inject, Injectable, Logger, OnApplicationShutdown, OnModuleDestroy } from '@nestjs/common'
+import { Redis } from 'ioredis'
+
+import { REDIS_PUBLISHER, REDIS_SUBSCRIBER } from './constants'
+
+@Injectable()
+export class RedisService implements OnModuleDestroy, OnApplicationShutdown {
+	private readonly logger = new Logger(RedisService.name)
+
+	constructor(
+		@Inject(REDIS_PUBLISHER) private readonly publisher: Redis,
+		@Inject(REDIS_SUBSCRIBER) private readonly subscriber: Redis
+	) {}
+
+	onModuleDestroy() {
+		this.publisher.quit()
+		this.subscriber.quit()
+	}
+
+	onApplicationShutdown() {
+		this.publisher.quit()
+		this.subscriber.quit()
+	}
+
+	async publish(channel: string, message: string): Promise<number> {
+		try {
+			const result = await this.publisher.publish(channel, message)
+			this.logger.log(`Published message to channel ${channel}`)
+			return result
+		} catch (error) {
+			this.logger.error(`Failed to publish message to channel ${channel}: ${(error as Error).message}`)
+		}
+	}
+
+	async subscribe(subcribedChannel: string, callback: (msg: string) => void): Promise<void> {
+		this.subscriber.subscribe(subcribedChannel, (error) => {
+			if (error) this.logger.error(error)
+		})
+		this.subscriber.on('message', (channel, message) => {
+			if (channel === subcribedChannel) {
+				callback(message)
+			}
+		})
+	}
+
+	async unsubscribe(channel: string): Promise<unknown> {
+		try {
+			const result = await this.subscriber.unsubscribe(channel)
+			this.logger.log(`Unsubscribed from channel ${channel}`)
+			return result
+		} catch (error) {
+			this.logger.error(`Failed to unsubscribe from channel ${channel}: ${(error as Error).message}`)
+		}
+	}
+}

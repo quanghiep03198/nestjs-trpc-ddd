@@ -1,5 +1,6 @@
 import { DATA_SOURCE_SYSCLOUD } from '@/databases/constants'
-import { EmployeeEntity } from '@/example/infrastructure/entities/employee.orm.entity'
+
+import { EmployeeEntity } from '@/modules/employee/infrastructure/entities'
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'

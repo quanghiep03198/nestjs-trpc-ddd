@@ -1,4 +1,4 @@
-import { DeleteEmployeeDto } from '@/example/application/dto/delete-employee.dto'
+import { DeleteEmployeeDto } from '@/modules/employee/application/dto/delete-employee.dto'
 
 export class EmployeeDeletedEvent {
 	constructor(public readonly deleteEmployeeRequest: DeleteEmployeeDto) {}

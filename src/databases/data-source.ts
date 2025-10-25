@@ -5,7 +5,25 @@ import { isIP } from 'node:net'
 import { join } from 'node:path'
 import { DataSource, DataSourceOptions } from 'typeorm'
 import { type SeederOptions } from 'typeorm-extension'
-import { DATABASE_SCHEMA, DATABASE_SYSCLOUD } from './constants'
+import { DATABASE_SYSCLOUD } from './constants'
+// import {
+// 	DepartmentFactory,
+// 	EmployeeFactory,
+// 	PermissionFactory,
+// 	PositionFactory,
+// 	RoleFactory,
+// 	UserFactory,
+// 	UserRoleFactory
+// } from './factories'
+// import {
+// 	DepartmentSeeder,
+// 	EmployeeSeeder,
+// 	PermissionSeeder,
+// 	PositionSeeder,
+// 	RoleSeeder,
+// 	UserRoleSeeder,
+// 	UserSeeder
+// } from './seeds'
 
 const logger = new Logger('TypeORM')
 
@@ -28,12 +46,14 @@ export default new DataSource({
 	username: env('DB_USERNAME'),
 	password: env('DB_PASSWORD'),
 	database: DATABASE_SYSCLOUD,
-	schema: DATABASE_SCHEMA,
-	entities: [join(__dirname, '../**/*.entity.{ts,js}'), join(__dirname, './**/*.entity.{ts,js}')],
-	migrations: [join(__dirname, './migrations/*.{ts,js}')],
-	subscribers: [join(__dirname, '../**/*.entity.subscriber.{ts,js}')],
+	// Note: Không set schema ở đây vì sẽ gây conflict với SQL Server
+	// Schema được chỉ định trực tiếp trong table name: database.schema.table
+	migrations: [join(__dirname, './migrations/**/*{.ts,.js}')],
+	seeds: ['src/databases/seeds/**/*.seeder{.ts,.js}'],
+	factories: ['src/databases/factories/**/*.factory{.ts,.js}'],
+	entities: [join(__dirname, '../**/*.entity.{ts,js}'), join(__dirname, './**/*.entity{.ts,.js}')],
+	subscribers: [join(__dirname, '../**/*.entity.subscriber{.ts,.js}')],
 	migrationsTableName: 'migrations',
-	seeds: [join(__dirname, './seeds/**/*.seeder.{ts,js}')],
 	logging: true,
 	synchronize: false,
 	options: {

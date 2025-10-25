@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { ICommand, ofType, Saga } from '@nestjs/cqrs'
 import { map, Observable } from 'rxjs'
 import { UpdateEmployeeContractCommand } from '../application/commands/update-employee-contract/update-employee-contract.command'
-import { EmployeeDeletedEvent } from '../domain/events/employee-deleted/employee-deleted.event'
+import { EmployeeDeletedEvent } from './../domain/events/employee-deleted/employee-deleted.event'
 
 @Injectable()
 export class EmployeeSagas {
@@ -16,7 +16,12 @@ export class EmployeeSagas {
 		return event$.pipe(
 			ofType(EmployeeDeletedEvent),
 			map((event) => {
-				return new UpdateEmployeeContractCommand(event.deleteEmployeeRequest)
+				return new UpdateEmployeeContractCommand({
+					employee_code: event.deleteEmployeeRequest.employee_code,
+					status: event.deleteEmployeeRequest.status,
+					contract_end_date: new Date(),
+					contract_type: event.deleteEmployeeRequest.contract_type
+				})
 			})
 		)
 	}

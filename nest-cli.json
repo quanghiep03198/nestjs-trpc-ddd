@@ -5,7 +5,11 @@
 	"compilerOptions": {
 		"assets": [
 			{
-				"include": "i18n/**/*",
+				"include": "i18n/**/*.json",
+				"watchAssets": true
+			},
+			{
+				"include": "assets",
 				"watchAssets": true
 			}
 		],
@@ -16,7 +20,7 @@
 				"swcrcPath": "infrastructure/.swcrc"
 			}
 		},
-		"typeCheck": false,
+		"typeCheck": true,
 		"tsConfigPath": "tsconfig.build.json",
 		"watchAssets": false
 	}

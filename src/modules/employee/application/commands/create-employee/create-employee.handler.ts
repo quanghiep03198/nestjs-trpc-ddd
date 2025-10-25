@@ -1,11 +1,9 @@
 import { DATA_SOURCE_SYSCLOUD } from '@/databases/constants'
-
-import { EmployeeDomainModel } from '@/example/domain/models/employee.model'
-import { EmployeeEntity } from '@/example/infrastructure/entities/employee.orm.entity'
-import { Logger } from '@nestjs/common'
+import { EmployeeDomainModel } from '@/modules/employee/domain/models/employee.model'
+import { EmployeeEntity } from '@/modules/employee/infrastructure/entities'
+import { ConflictException, Logger } from '@nestjs/common'
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs'
 import { InjectRepository } from '@nestjs/typeorm'
-import { TRPCError } from '@trpc/server'
 import { Repository } from 'typeorm'
 import { CreateEmployeeCommand } from './create-employee.command'
 
@@ -24,7 +22,7 @@ export class CreateEmployeeHandler implements ICommandHandler<CreateEmployeeComm
 
 		// * Kiểm tra email đã tồn tại hay chưa
 		const existingEmployee = await this.employeeRepository.findOneBy({ email: createEmployeeRequest.email })
-		if (existingEmployee) throw new TRPCError({ message: 'Email đã tồn tại', code: 'CONFLICT' })
+		if (existingEmployee) throw new ConflictException('Email đã tồn tại')
 
 		// * Tạo mới thông tin nhân sự vào database
 		const createdEmployee = this.employeeRepository.create(createEmployeeRequest)

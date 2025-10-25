@@ -1,0 +1,69 @@
+import { Injectable } from '@nestjs/common'
+import { DeepPartial, DeleteResult, FindManyOptions, FindOptionsWhere, Repository, UpdateResult } from 'typeorm'
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity.js'
+import { BaseAbstractEntity } from './base.abstract.entity'
+import { PaginationDto } from './dto/pagination.dto'
+
+@Injectable()
+export abstract class BaseAbstractRepository<Entity extends BaseAbstractEntity> {
+	protected constructor(private readonly repository: Repository<Entity>) {}
+
+	async insertOne(payload: DeepPartial<Entity>) {
+		const newRecord = this.repository.create(payload)
+		return await this.repository.save(newRecord)
+	}
+
+	async insertMany(payload: DeepPartial<Entity>[]) {
+		const newRecords = this.repository.create(payload)
+		return await this.repository.insert(newRecords as FirstParameter<typeof this.repository.insert>)
+	}
+
+	async findAll(): Promise<Entity[]> {
+		return await this.repository.find()
+	}
+
+	async findOneById(id: number): Promise<Entity> {
+		return await this.repository.findOneBy({ id: id } as FindOptionsWhere<Entity>)
+	}
+
+	async updateOneById(id: number, partialEntity: QueryDeepPartialEntity<Entity>) {
+		return await this.repository.update(id, partialEntity)
+	}
+
+	async deleteOneById(id: number): Promise<DeleteResult> {
+		return await this.repository.delete(id)
+	}
+
+	async softDeleteOneById(id: number): Promise<UpdateResult> {
+		return await this.repository.createQueryBuilder().softDelete().where({ id }).execute()
+	}
+
+	async restoreOneById(id: number): Promise<UpdateResult> {
+		return await this.repository.createQueryBuilder().restore().where({ id }).execute()
+	}
+
+	async paginate(
+		condition: FindOptionsWhere<Entity> | FindOptionsWhere<Entity>[],
+		{ page, limit, ...options }: PaginationDto & Omit<FindManyOptions<Entity>, 'where'>
+	) {
+		const [data, totalDocs] = await this.repository.findAndCount({
+			skip: (page - 1) * limit,
+			take: limit,
+			where: condition,
+			...options
+		})
+		const totalPages = Math.ceil(totalDocs / limit)
+
+		return {
+			data,
+			totalDocs,
+			totalPages,
+			hasNextPage: page < totalPages,
+			hasPrevPage: page > 1,
+			nextPage: page < totalPages ? page + 1 : null,
+			prevPage: page > 1 ? page - 1 : null,
+			limit,
+			page
+		} satisfies Pagination<Entity>
+	}
+}

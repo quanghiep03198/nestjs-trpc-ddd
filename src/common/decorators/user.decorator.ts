@@ -1,4 +1,4 @@
-import { UserEntity } from '@/modules/user/infrastructure/entities/user.entity'
+import { UserEntity } from '@/modules/user/infrastructure/entities'
 import { createParamDecorator, ExecutionContext } from '@nestjs/common'
 
 export const User = createParamDecorator(
@@ -8,6 +8,6 @@ export const User = createParamDecorator(
 		if (!user) {
 			return null
 		}
-		return property ? user[property] : user
+		return property && Object.hasOwn(user, property) ? user[property] : user
 	}
 )

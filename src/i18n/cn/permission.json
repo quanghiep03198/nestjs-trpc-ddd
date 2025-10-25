@@ -1,0 +1,118 @@
+{
+	"employee:create": {
+		"name": "创建员工",
+		"description": "向系统添加新员工"
+	},
+	"employee:read": {
+		"name": "查看员工信息",
+		"description": "查看员工列表和详细信息"
+	},
+	"employee:update": {
+		"name": "更新员工",
+		"description": "编辑员工信息"
+	},
+	"employee:delete": {
+		"name": "删除员工",
+		"description": "从系统中删除员工"
+	},
+	"employee:export": {
+		"name": "导出员工列表",
+		"description": "将员工数据导出到Excel/CSV"
+	},
+	"department:create": {
+		"name": "创建部门",
+		"description": "添加新部门"
+	},
+	"department:read": {
+		"name": "查看部门",
+		"description": "查看部门列表"
+	},
+	"department:update": {
+		"name": "更新部门",
+		"description": "编辑部门信息"
+	},
+	"department:delete": {
+		"name": "删除部门",
+		"description": "从系统中删除部门"
+	},
+	"user:create": {
+		"name": "创建账户",
+		"description": "创建新登录账户"
+	},
+	"user:read": {
+		"name": "查看账户",
+		"description": "查看账户列表"
+	},
+	"user:update": {
+		"name": "更新账户",
+		"description": "编辑账户信息"
+	},
+	"user:delete": {
+		"name": "删除账户",
+		"description": "从系统中删除账户"
+	},
+	"role:assign": {
+		"name": "分配角色",
+		"description": "为用户分配角色"
+	},
+	"role:revoke": {
+		"name": "撤销角色",
+		"description": "撤销用户角色"
+	},
+	"role:create": {
+		"name": "创建角色",
+		"description": "创建新角色"
+	},
+	"role:update": {
+		"name": "更新角色",
+		"description": "编辑角色"
+	},
+	"attendance:create": {
+		"name": "打卡",
+		"description": "创建考勤记录"
+	},
+	"attendance:read": {
+		"name": "查看考勤",
+		"description": "查看考勤数据"
+	},
+	"attendance:update": {
+		"name": "编辑考勤",
+		"description": "修改考勤数据"
+	},
+	"attendance:approve": {
+		"name": "批准考勤",
+		"description": "批准考勤数据"
+	},
+	"attendance:export": {
+		"name": "导出考勤",
+		"description": "将考勤数据导出到文件"
+	},
+	"payroll:create": {
+		"name": "创建工资单",
+		"description": "创建月度工资单"
+	},
+	"payroll:read": {
+		"name": "查看工资单",
+		"description": "查看工资单数据"
+	},
+	"payroll:update": {
+		"name": "编辑工资单",
+		"description": "修改工资单"
+	},
+	"payroll:approve": {
+		"name": "批准工资单",
+		"description": "批准工资单"
+	},
+	"payroll:export": {
+		"name": "导出工资单",
+		"description": "将工资单数据导出到文件"
+	},
+	"report:view": {
+		"name": "查看报告",
+		"description": "查看统计报告"
+	},
+	"report:export": {
+		"name": "导出报告",
+		"description": "将报告导出到文件"
+	}
+}

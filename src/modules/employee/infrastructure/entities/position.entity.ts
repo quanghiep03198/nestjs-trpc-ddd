@@ -1,5 +1,5 @@
 import { DATABASE_SCHEMA, DATABASE_SYSCLOUD } from '@/databases/constants'
-import { BaseAbstractEntity } from '@/modules/_base/base.entity.abstract'
+import { BaseAbstractEntity } from '@/modules/_base/base.abstract.entity'
 import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from 'typeorm'
 import { DepartmentEntity } from './department.entity'
 

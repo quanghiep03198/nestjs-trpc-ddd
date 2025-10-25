@@ -1,12 +1,12 @@
+import { DATA_SOURCE_SYSCLOUD } from '@/databases/constants'
 import { Logger, Module } from '@nestjs/common'
 import { CqrsModule, EventBus, UnhandledExceptionBus } from '@nestjs/cqrs'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Subject, takeUntil } from 'rxjs'
-import { DATA_SOURCE_SYSCLOUD } from 'src/databases/constants'
 import { EmployeeCommandHandlers } from './application/commands'
 import { EmployeeQueryHandlers } from './application/queries'
 import { EmployeeEventHandlers } from './domain/events'
-import { EmployeeEntity } from './infrastructure/entities/employee.orm.entity'
+import { EmployeeEntity } from './infrastructure/entities/employee.entity'
 import { EmployeeEntitySubscriber } from './infrastructure/subscribers/employee.entity.subscriber'
 import { EmployeeController } from './presentation/controllers/employee.controller'
 import { EmployeeSagas } from './sagas/employee.saga'
@@ -15,7 +15,6 @@ import { EmployeeSagas } from './sagas/employee.saga'
 	imports: [CqrsModule, TypeOrmModule.forFeature([EmployeeEntity], DATA_SOURCE_SYSCLOUD)],
 	controllers: [EmployeeController],
 	providers: [
-		// EmployeeRouter,
 		EmployeeEntitySubscriber,
 		EmployeeSagas,
 		...EmployeeQueryHandlers,

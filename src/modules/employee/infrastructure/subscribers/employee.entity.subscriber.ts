@@ -1,7 +1,7 @@
 import { leftPad } from '@/common/libs'
 import { capitalize } from 'lodash'
 import { EntitySubscriberInterface, EventSubscriber, InsertEvent } from 'typeorm'
-import { EmployeeEntity } from '../entities/employee.orm.entity'
+import { EmployeeEntity } from '../entities/employee.entity'
 
 @EventSubscriber()
 export class EmployeeEntitySubscriber implements EntitySubscriberInterface<EmployeeEntity> {

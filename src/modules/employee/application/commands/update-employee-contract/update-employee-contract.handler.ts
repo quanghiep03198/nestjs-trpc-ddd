@@ -1,5 +1,5 @@
 import { DATA_SOURCE_SYSCLOUD } from '@/databases/constants'
-import { EmployeeEntity } from '@/example/infrastructure/entities/employee.orm.entity'
+import { EmployeeEntity } from '@/modules/employee/infrastructure/entities'
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
@@ -24,7 +24,7 @@ export class UpdateEmployeeContractHandler implements ICommandHandler<UpdateEmpl
 		)
 
 		console.log(
-			`✅ [Saga] Hợp đồng của nhân viên có mã "${updateEmployeeContractRequest.employee_code}" đã được cập nhật với trạng thái: "${updateEmployeeContractRequest.status}"`
+			`[Saga] Hợp đồng của nhân viên có mã "${updateEmployeeContractRequest.employee_code}" đã được cập nhật với trạng thái: "${updateEmployeeContractRequest.status}"`
 		)
 
 		return result

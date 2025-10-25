@@ -1,8 +1,11 @@
+import { BaseAbstractEntity } from '@/modules/_base/base.abstract.entity'
 import { MigrationInterface, QueryRunner, Table, TableIndex } from 'typeorm'
-import { BaseAbstractEntity } from '../base/base.entity.abstract'
+import { DATABASE_SCHEMA, DATABASE_SYSCLOUD } from '../constants'
 
 export class Employee1760158565817 implements MigrationInterface {
 	private readonly table = new Table({
+		database: DATABASE_SYSCLOUD,
+		schema: DATABASE_SCHEMA,
 		name: 'sc_employees',
 		columns: [
 			...BaseAbstractEntity.BASE_COLUMNS,
@@ -174,7 +177,7 @@ export class Employee1760158565817 implements MigrationInterface {
 
 		// Tạo các indices
 		await queryRunner.createIndex(
-			'sc_employees',
+			this.table,
 			new TableIndex({
 				name: 'IDX_sc_employees_employee_code',
 				columnNames: ['employee_code'],
@@ -183,7 +186,7 @@ export class Employee1760158565817 implements MigrationInterface {
 		)
 
 		await queryRunner.createIndex(
-			'sc_employees',
+			this.table,
 			new TableIndex({
 				name: 'IDX_sc_employees_email',
 				columnNames: ['email'],
@@ -192,7 +195,7 @@ export class Employee1760158565817 implements MigrationInterface {
 		)
 
 		await queryRunner.createIndex(
-			'sc_employees',
+			this.table,
 			new TableIndex({
 				name: 'IDX_sc_employees_phone',
 				columnNames: ['phone']
@@ -200,7 +203,7 @@ export class Employee1760158565817 implements MigrationInterface {
 		)
 
 		await queryRunner.createIndex(
-			'sc_employees',
+			this.table,
 			new TableIndex({
 				name: 'IDX_sc_employees_department_id',
 				columnNames: ['department_id']
@@ -208,7 +211,7 @@ export class Employee1760158565817 implements MigrationInterface {
 		)
 
 		await queryRunner.createIndex(
-			'sc_employees',
+			this.table,
 			new TableIndex({
 				name: 'IDX_sc_employees_position_id',
 				columnNames: ['position_id']
@@ -216,7 +219,7 @@ export class Employee1760158565817 implements MigrationInterface {
 		)
 
 		await queryRunner.createIndex(
-			'sc_employees',
+			this.table,
 			new TableIndex({
 				name: 'IDX_sc_employees_status',
 				columnNames: ['status']
@@ -226,12 +229,17 @@ export class Employee1760158565817 implements MigrationInterface {
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
 		// Xóa các indices trước
-		await queryRunner.dropIndex('sc_employees', 'IDX_sc_employees_employee_code')
-		await queryRunner.dropIndex('sc_employees', 'IDX_sc_employees_email')
-		await queryRunner.dropIndex('sc_employees', 'IDX_sc_employees_phone')
-		await queryRunner.dropIndex('sc_employees', 'IDX_sc_employees_department_id')
-		await queryRunner.dropIndex('sc_employees', 'IDX_sc_employees_position_id')
-		await queryRunner.dropIndex('sc_employees', 'IDX_sc_employees_status')
+		// Drop all foreign keys if exist
+		const table = await queryRunner.getTable(this.table.name)
+		if (table) {
+			for (const fk of table.foreignKeys) {
+				await queryRunner.dropForeignKey(this.table, fk)
+			}
+			// Drop all indices if exist
+			for (const idx of table.indices) {
+				await queryRunner.dropIndex(this.table, idx)
+			}
+		}
 
 		// Xóa table
 		await queryRunner.dropTable(this.table, true)

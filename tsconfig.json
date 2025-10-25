@@ -31,6 +31,14 @@
 		"inlineSources": true,
 		"sourceRoot": "/"
 	},
-	"include": ["src/**/*.ts", "test"],
+	"include": [
+		"src/**/*.ts",
+		"test",
+		"src/databases/seeds/employee.seeder.ts",
+		".temp/trash/permission.seeder.ts",
+		".temp/trash/role-permission.seeder.ts",
+		".temp/trash/role.seeder.ts",
+		".temp/trash/user.seeder.ts"
+	],
 	"exclude": ["node_modules"]
 }

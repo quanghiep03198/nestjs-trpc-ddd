@@ -21,3 +21,12 @@ export enum MaritalStatus {
 	DIVORCED = 'divorced',
 	WIDOWED = 'widowed'
 }
+
+export enum ContractType {
+	INDEFINITE_TERM = 'indefinite_term',
+	FIXED_TERM = 'fixed_term',
+	SEASONAL = 'seasonal',
+	INTERNSHIP = 'internship',
+	PROBATIONARY = 'probationary',
+	PART_TIME = 'part_time'
+}

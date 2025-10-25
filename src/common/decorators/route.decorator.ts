@@ -1,4 +1,3 @@
-// import { I18nPath } from '@/i18n/i18n.generated'
 import {
 	applyDecorators,
 	Delete,

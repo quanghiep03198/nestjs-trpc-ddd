@@ -1,0 +1,118 @@
+{
+	"employee:create": {
+		"name": "Create Employee",
+		"description": "Add new employee to the system"
+	},
+	"employee:read": {
+		"name": "View Employee Information",
+		"description": "View employee list and details"
+	},
+	"employee:update": {
+		"name": "Update Employee",
+		"description": "Edit employee information"
+	},
+	"employee:delete": {
+		"name": "Delete Employee",
+		"description": "Remove employee from the system"
+	},
+	"employee:export": {
+		"name": "Export Employee List",
+		"description": "Export employee data to Excel/CSV"
+	},
+	"department:create": {
+		"name": "Create Department",
+		"description": "Add new department"
+	},
+	"department:read": {
+		"name": "View Department",
+		"description": "View department list"
+	},
+	"department:update": {
+		"name": "Update Department",
+		"description": "Edit department information"
+	},
+	"department:delete": {
+		"name": "Delete Department",
+		"description": "Remove department from the system"
+	},
+	"user:create": {
+		"name": "Create Account",
+		"description": "Create new login account"
+	},
+	"user:read": {
+		"name": "View Account",
+		"description": "View account list"
+	},
+	"user:update": {
+		"name": "Update Account",
+		"description": "Edit account information"
+	},
+	"user:delete": {
+		"name": "Delete Account",
+		"description": "Remove account from the system"
+	},
+	"role:assign": {
+		"name": "Assign Role",
+		"description": "Assign role to user"
+	},
+	"role:revoke": {
+		"name": "Revoke Role",
+		"description": "Revoke user's role"
+	},
+	"role:create": {
+		"name": "Create Role",
+		"description": "Create new role"
+	},
+	"role:update": {
+		"name": "Update Role",
+		"description": "Edit role"
+	},
+	"attendance:create": {
+		"name": "Clock In/Out",
+		"description": "Create attendance record"
+	},
+	"attendance:read": {
+		"name": "View Attendance",
+		"description": "View attendance data"
+	},
+	"attendance:update": {
+		"name": "Edit Attendance",
+		"description": "Modify attendance data"
+	},
+	"attendance:approve": {
+		"name": "Approve Attendance",
+		"description": "Approve attendance data"
+	},
+	"attendance:export": {
+		"name": "Export Attendance",
+		"description": "Export attendance data to file"
+	},
+	"payroll:create": {
+		"name": "Create Payroll",
+		"description": "Create monthly payroll"
+	},
+	"payroll:read": {
+		"name": "View Payroll",
+		"description": "View payroll data"
+	},
+	"payroll:update": {
+		"name": "Edit Payroll",
+		"description": "Modify payroll"
+	},
+	"payroll:approve": {
+		"name": "Approve Payroll",
+		"description": "Approve payroll"
+	},
+	"payroll:export": {
+		"name": "Export Payroll",
+		"description": "Export payroll data to file"
+	},
+	"report:view": {
+		"name": "View Report",
+		"description": "View statistical reports"
+	},
+	"report:export": {
+		"name": "Export Report",
+		"description": "Export report to file"
+	}
+}

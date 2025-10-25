@@ -1,8 +1,16 @@
 import { env } from '@/common/utils'
 import { DATABASE_SCHEMA } from '@/databases/constants'
+import {
+	PermissionEntity,
+	RoleEntity,
+	RolePermissionEntity,
+	UserRoleEntity
+} from '@/modules/auth/infrastructure/entities'
+import { DepartmentEntity, EmployeeEntity, PositionEntity } from '@/modules/employee/infrastructure/entities'
+import { EmployeeEntitySubscriber } from '@/modules/employee/infrastructure/subscribers'
+import { UserEntity } from '@/modules/user/infrastructure/entities'
 import { type ConfigFactory } from '@nestjs/config'
 import { type TypeOrmModuleOptions } from '@nestjs/typeorm'
-import { join } from 'node:path'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
 export const typeOrmConfigFactory: ConfigFactory<Record<'typeorm', TypeOrmModuleOptions>> = () => ({
@@ -14,11 +22,16 @@ export const typeOrmConfigFactory: ConfigFactory<Record<'typeorm', TypeOrmModule
 		password: env('DB_PASSWORD'),
 		schema: DATABASE_SCHEMA,
 		entities: [
-			join(__dirname, '../**/*.entity.{ts,js}'),
-			`!${join(__dirname, '../**/base.abstract.entity.{ts,js}')}`
+			UserEntity,
+			RoleEntity,
+			PermissionEntity,
+			UserRoleEntity,
+			RolePermissionEntity,
+			EmployeeEntity,
+			DepartmentEntity,
+			PositionEntity
 		],
-		subscribers: [join(__dirname, '../**/*.subscriber.{ts,js}')],
-		migrations: [join(__dirname, '/migrations/**/*.{ts,js}')],
+		subscribers: [EmployeeEntitySubscriber],
 		autoLoadEntities: true,
 		synchronize: true,
 		logging: ['error'],

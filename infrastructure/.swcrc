@@ -1,7 +1,7 @@
 {
 	"$schema": "https://swc.rs/schema.json",
 	"sourceMaps": true,
-	"exclude": ["node_modules", "src/trpc/generated/server.ts"],
+	"exclude": ["node_modules"],
 	"jsc": {
 		"parser": {
 			"syntax": "typescript",
