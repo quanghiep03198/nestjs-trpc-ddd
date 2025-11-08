@@ -1,16 +1,10 @@
 import { BaseAbstractEntity } from '@/modules/_base/base.abstract.entity'
-import { MigrationInterface, QueryRunner, Table, TableIndex } from 'typeorm'
+import { MigrationInterface, QueryRunner, Table, TableForeignKey, TableIndex } from 'typeorm'
 
 export class Department1762141311601 implements MigrationInterface {
 	private readonly tableName = 'sc_departments'
 
 	public async up(queryRunner: QueryRunner): Promise<void> {
-		// Drop table if exists (cleanup from previous failed migration)
-		await queryRunner.query(`
-			IF OBJECT_ID('[dbo].[sc_departments]', 'U') IS NOT NULL
-				DROP TABLE [dbo].[sc_departments]
-		`)
-
 		await queryRunner.createTable(
 			new Table({
 				name: this.tableName,
@@ -23,6 +17,13 @@ export class Department1762141311601 implements MigrationInterface {
 						isUnique: true,
 						isNullable: false,
 						comment: 'Department code (unique)'
+					},
+					{
+						name: 'name',
+						type: 'nvarchar',
+						length: '100',
+						isNullable: false,
+						comment: 'Department name'
 					},
 					{
 						name: 'parent_id',
@@ -74,27 +75,30 @@ export class Department1762141311601 implements MigrationInterface {
 			})
 		)
 
-		// Create self-referencing foreign key for parent_id using raw query
-		// Note: Self-referencing FK in SQL Server has limitations:
-		// - Cannot use ON DELETE CASCADE/SET NULL (causes cycles)
-		// - Must use NO ACTION or handle deletion in application code
-		await queryRunner.query(/* SQL */ `
-			ALTER TABLE [dbo].[sc_departments]
-			ADD CONSTRAINT [FK_DEPARTMENT_PARENT] 
-			FOREIGN KEY ([parent_id]) 
-			REFERENCES [dbo].[sc_departments]([id])
-		`)
+		const employeeTable = await queryRunner.getTable('sc_employees')
+		if (employeeTable)
+			await queryRunner.createForeignKey(
+				this.tableName,
+				new TableForeignKey({
+					name: 'FK_DEPARTMENT_MANAGER',
+					columnNames: ['manager_id'],
+					referencedTableName: employeeTable.name,
+					referencedColumnNames: ['id'],
+					onDelete: 'NO ACTION',
+					onUpdate: 'NO ACTION'
+				})
+			)
 
-		// TODO: Create foreign key for manager_id referencing employees
-		// Note: Tạm thời comment để tránh lỗi, sẽ tạo sau khi fix employee migration
-		await queryRunner.query(/* SQL */ `
-			ALTER TABLE [dbo].[sc_departments]
-			ADD CONSTRAINT [FK_DEPARTMENT_MANAGER]
-			FOREIGN KEY ([manager_id])
-			REFERENCES [dbo].[sc_employees]([id])
-			ON DELETE SET NULL
-			ON UPDATE CASCADE
-		`)
+		await queryRunner.createForeignKey(
+			this.tableName,
+			new TableForeignKey({
+				name: 'FK_DEPARTMENT_PARENT',
+				columnNames: ['parent_id'],
+				referencedTableName: this.tableName,
+				referencedColumnNames: ['id'],
+				onDelete: 'NO ACTION'
+			})
+		)
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
@@ -108,22 +112,6 @@ export class Department1762141311601 implements MigrationInterface {
 				await queryRunner.dropIndex(this.tableName, idx)
 			}
 		}
-		// await queryRunner.query(/* SQL */ `
-		// 	IF EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'FK_DEPARTMENT_PARENT')
-		// 		ALTER TABLE [dbo].[sc_departments] DROP CONSTRAINT [FK_DEPARTMENT_PARENT]
-		// `)
-
-		// // Drop indexes
-		// // Drop indexes if they exist
-		// await queryRunner.query(/* SQL */ `
-		// 	IF EXISTS (SELECT name FROM sys.indexes WHERE name = 'IDX_DEPARTMENT_PARENT_ID' AND object_id = OBJECT_ID('[dbo].[sc_departments]'))
-		// 		DROP INDEX [IDX_DEPARTMENT_PARENT_ID] ON [dbo].[sc_departments]
-		// `)
-
-		// await queryRunner.query(/* SQL */ `
-		// 	IF EXISTS (SELECT name FROM sys.indexes WHERE name = 'IDX_DEPARTMENT_CODE_UNIQUE' AND object_id = OBJECT_ID('[dbo].[sc_departments]'))
-		// 		DROP INDEX [IDX_DEPARTMENT_CODE_UNIQUE] ON [dbo].[sc_departments]
-		// `)
 
 		// Drop table
 		await queryRunner.dropTable(this.tableName, true)

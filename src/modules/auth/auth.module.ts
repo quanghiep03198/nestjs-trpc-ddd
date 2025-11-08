@@ -14,9 +14,9 @@ import { AuthController } from './presentation/controllers/auth.controller'
 
 @Module({
 	imports: [
-		CqrsModule,
-		UserModule,
 		TypeOrmModule.forFeature([UserRoleEntity, RolePermissionEntity, PermissionEntity], DATA_SOURCE_SYSCLOUD),
+		UserModule,
+		CqrsModule,
 		JwtModule.registerAsync({
 			global: true,
 			inject: [ConfigService],

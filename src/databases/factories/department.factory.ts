@@ -24,6 +24,7 @@ export default setSeederFactory(DepartmentEntity, () => {
 	const code = name.toUpperCase().replace(/\s+/g, '_')
 
 	department.code = `DEPT_${code}_${faker.string.alphanumeric(4).toUpperCase()}`
+	department.name = name
 
 	// Parent department (will be set by seeder for hierarchical structure)
 	department.parent_id = null

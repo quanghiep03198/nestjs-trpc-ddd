@@ -6,7 +6,7 @@ import { Repository } from 'typeorm'
 import { GetUserProfile } from './get-user-profile.query'
 
 @QueryHandler(GetUserProfile)
-export class GetUserProfileHandler implements IQueryHandler<GetUserProfile> {
+export class GetUserProfileHandler implements IQueryHandler<GetUserProfile, UserEntity> {
 	constructor(
 		@InjectRepository(UserEntity, DATA_SOURCE_SYSCLOUD) private readonly userRespository: Repository<UserEntity>
 	) {}

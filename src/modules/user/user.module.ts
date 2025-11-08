@@ -12,6 +12,6 @@ import { UserController } from './presentation/controllers/user.controller'
 	imports: [TypeOrmModule.forFeature([UserEntity], DATA_SOURCE_SYSCLOUD), CqrsModule],
 	controllers: [UserController],
 	providers: [...UserQueryHandlers, ...UserCommandHandlers],
-	exports: [...UserQueryHandlers, ...UserCommandHandlers]
+	exports: [TypeOrmModule, ...UserQueryHandlers, ...UserCommandHandlers]
 })
 export class UserModule {}

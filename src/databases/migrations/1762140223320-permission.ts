@@ -66,9 +66,15 @@ export class Permission1762140223320 implements MigrationInterface {
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
 		// Drop indexes first
-		await queryRunner.dropIndex(this.tableName, 'IDX_PERMISSION_ACTION')
-		await queryRunner.dropIndex(this.tableName, 'IDX_PERMISSION_MODULE')
-		await queryRunner.dropIndex(this.tableName, 'IDX_PERMISSION_CODE')
+		const table = await queryRunner.getTable(this.tableName)
+		if (table) {
+			for (const fk of table.foreignKeys) {
+				await queryRunner.dropForeignKey(this.tableName, fk)
+			}
+			for (const idx of table.indices) {
+				await queryRunner.dropIndex(this.tableName, idx)
+			}
+		}
 
 		// Drop table
 		await queryRunner.dropTable(this.tableName, true)

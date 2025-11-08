@@ -1,11 +1,6 @@
 import { env } from '@/common/utils'
 import { DATABASE_SCHEMA } from '@/databases/constants'
-import {
-	PermissionEntity,
-	RoleEntity,
-	RolePermissionEntity,
-	UserRoleEntity
-} from '@/modules/auth/infrastructure/entities'
+import { PermissionEntity, RolePermissionEntity, UserRoleEntity } from '@/modules/auth/infrastructure/entities'
 import { DepartmentEntity, EmployeeEntity, PositionEntity } from '@/modules/employee/infrastructure/entities'
 import { EmployeeEntitySubscriber } from '@/modules/employee/infrastructure/subscribers'
 import { UserEntity } from '@/modules/user/infrastructure/entities'
@@ -23,7 +18,6 @@ export const typeOrmConfigFactory: ConfigFactory<Record<'typeorm', TypeOrmModule
 		schema: DATABASE_SCHEMA,
 		entities: [
 			UserEntity,
-			RoleEntity,
 			PermissionEntity,
 			UserRoleEntity,
 			RolePermissionEntity,

@@ -108,8 +108,7 @@ export class User1762138155420 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		// Drop indexes first
-		// Drop all foreign keys
+		// * Drop indexes and all foreign keys first
 		const table = await queryRunner.getTable(this.tableName)
 		if (table) {
 			for (const fk of table.foreignKeys) {

@@ -1,3 +1,4 @@
+import { I18nPath } from '@/generated/i18n.generated'
 import {
 	applyDecorators,
 	Delete,
@@ -30,7 +31,7 @@ interface RouteOptions {
 	endpoint?: string
 	method: HttpMethod
 	statusCode?: HttpStatus
-	message?: string | PluralI18nPath
+	message?: I18nPath | PluralI18nPath
 }
 
 /**

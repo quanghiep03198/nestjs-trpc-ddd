@@ -37,29 +37,22 @@ export class RolePermission1762140230600 implements MigrationInterface {
 			})
 		)
 
-		// Create foreign key to roles table
-		await queryRunner.createForeignKey(
-			this.tableName,
-			new TableForeignKey({
-				name: 'FK_ROLE_PERMISSION_ROLE',
-				columnNames: ['role'],
-				referencedTableName: 'dbo.sc_roles',
-				referencedColumnNames: ['id'],
-				onDelete: 'CASCADE'
-			})
-		)
+		// Note: No FK for 'role' column because it's an ENUM, not a foreign key
 
 		// Create foreign key to permissions table
-		await queryRunner.createForeignKey(
-			this.tableName,
-			new TableForeignKey({
-				name: 'FK_ROLE_PERMISSION_PERMISSION',
-				columnNames: ['permission_id'],
-				referencedTableName: 'dbo.sc_permissions',
-				referencedColumnNames: ['id'],
-				onDelete: 'CASCADE'
-			})
-		)
+		const permissionTable = await queryRunner.getTable('sc_permissions')
+		if (permissionTable)
+			await queryRunner.createForeignKey(
+				this.tableName,
+				new TableForeignKey({
+					name: 'FK_ROLE_PERMISSION_PERMISSION',
+					columnNames: ['permission_id'],
+					referencedTableName: permissionTable.name,
+					referencedColumnNames: ['id'],
+					onDelete: 'NO ACTION',
+					onUpdate: 'NO ACTION'
+				})
+			)
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
@@ -73,11 +66,6 @@ export class RolePermission1762140230600 implements MigrationInterface {
 				await queryRunner.dropIndex(this.tableName, idx)
 			}
 		}
-		// await queryRunner.dropForeignKey(this.tableName, 'FK_ROLE_PERMISSION_ROLE')
-		// await queryRunner.dropForeignKey(this.tableName, 'FK_ROLE_PERMISSION_PERMISSION')
-
-		// Drop index
-		// await queryRunner.dropIndex(this.tableName, 'IDX_ROLE_PERMISSION_UNIQUE')
 
 		// Drop table
 		await queryRunner.dropTable(this.tableName, true)

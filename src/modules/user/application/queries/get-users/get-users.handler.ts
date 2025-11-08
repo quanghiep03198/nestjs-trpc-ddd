@@ -6,7 +6,7 @@ import { UserEntity } from '../../../infrastructure/entities'
 import { GetUsersQuery } from './get-users.query'
 
 @QueryHandler(GetUsersQuery)
-export class GetUsersHandler implements IQueryHandler<GetUsersQuery> {
+export class GetUsersHandler implements IQueryHandler<GetUsersQuery, UserEntity[]> {
 	constructor(
 		@InjectRepository(UserEntity, DATA_SOURCE_SYSCLOUD) private readonly userRespository: Repository<UserEntity>
 	) {}

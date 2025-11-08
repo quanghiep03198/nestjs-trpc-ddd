@@ -61,33 +61,25 @@ export class UserRole1762140210744 implements MigrationInterface {
 		)
 
 		// Create foreign key to users table
-		await queryRunner.createForeignKey(
-			this.tableName,
-			new TableForeignKey({
-				name: 'FK_USER_ROLE_USER',
-				columnNames: ['user_id'],
-				referencedTableName: 'dbo.sc_users',
-				referencedColumnNames: ['id'],
-				onDelete: 'CASCADE'
-			})
-		)
+		const referenceTable = await queryRunner.getTable('sc_users')
+		if (referenceTable)
+			await queryRunner.createForeignKey(
+				this.tableName,
+				new TableForeignKey({
+					name: 'FK_USER_ROLE_USER',
+					columnNames: ['user_id'],
+					referencedTableName: 'sc_users',
+					referencedColumnNames: ['id'],
+					onDelete: 'NO ACTION',
+					onUpdate: 'NO ACTION'
+				})
+			)
 
-		// Create foreign key to roles table
-		await queryRunner.createForeignKey(
-			this.tableName,
-			new TableForeignKey({
-				name: 'FK_USER_ROLE_ROLE',
-				columnNames: ['role'],
-				referencedTableName: 'dbo.sc_roles',
-				referencedColumnNames: ['id'],
-				onDelete: 'CASCADE'
-			})
-		)
+		// Note: No FK for 'role' column because it's an ENUM, not a foreign key
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		// Drop foreign keys first
-		// Drop foreign keys if exist
+		// * Drop foreign keys and foreign keys if exist first
 		const table = await queryRunner.getTable(this.tableName)
 		if (table) {
 			for (const fk of table.foreignKeys) {

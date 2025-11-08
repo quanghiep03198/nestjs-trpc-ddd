@@ -13,16 +13,16 @@ import type { RolePermissionEntity } from './role-permission.entity'
 @Index(['module'])
 @Index(['action'])
 export class PermissionEntity extends BaseAbstractEntity {
-	@Column({ type: 'nvarchar', length: 100, unique: true, comment: 'Mã quyền (module:action) VD: employee:create' })
-	code: string
-
 	@Column({ type: 'nvarchar', length: 50, comment: 'Tên module (employee, department, attendance, payroll)' })
 	module: string
 
-	@Column({ type: 'nvarchar', length: 50, comment: 'Hành động: create, read, update, delete, approve, export' })
+	@Column({ type: 'nvarchar', length: 100, unique: true, comment: 'Mã quyền (module:action) VD: employee:create' })
+	code: string
+
+	@Column({ type: 'nvarchar', length: 50, comment: 'Hành động: create, read, update, delete, import, export,...' })
 	action: string
 
 	// Relationships
-	@OneToMany('RolePermissionEntity', 'permissions')
+	@OneToMany('RolePermissionEntity', 'permission')
 	permissions: RolePermissionEntity[]
 }

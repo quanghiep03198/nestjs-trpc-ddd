@@ -1,6 +1,6 @@
 import { DATABASE_SCHEMA, DATABASE_SYSCLOUD } from '@/databases/constants'
 import { BaseAbstractEntity } from '@/modules/_base/base.abstract.entity'
-import { UserEntity } from '@/modules/user/infrastructure/entities'
+import type { UserEntity } from '@/modules/user/infrastructure/entities'
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm'
 import { Role } from '../../domain/constants'
 

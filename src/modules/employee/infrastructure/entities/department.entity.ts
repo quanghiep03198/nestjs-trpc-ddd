@@ -15,6 +15,9 @@ export class DepartmentEntity extends BaseAbstractEntity {
 	@Column({ type: 'nvarchar', length: 50, unique: true, comment: 'Mã phòng ban' })
 	code: string
 
+	@Column({ type: 'nvarchar', length: 100, comment: 'Tên phòng ban' })
+	name: string
+
 	@Column({ type: 'int', nullable: true, comment: 'ID phòng ban cha (cho cấu trúc cây)' })
 	parent_id?: number
 

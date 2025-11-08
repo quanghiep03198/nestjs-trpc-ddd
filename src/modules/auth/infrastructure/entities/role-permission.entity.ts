@@ -2,7 +2,7 @@ import { DATABASE_SCHEMA, DATABASE_SYSCLOUD } from '@/databases/constants'
 import { BaseAbstractEntity } from '@/modules/_base/base.abstract.entity'
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm'
 import { Role } from '../../domain/constants'
-import { PermissionEntity } from './permission.entity'
+import type { PermissionEntity } from './permission.entity'
 
 @Entity({
 	database: DATABASE_SYSCLOUD,
@@ -20,5 +20,5 @@ export class RolePermissionEntity extends BaseAbstractEntity {
 
 	@ManyToOne('PermissionEntity', 'permissions', { onDelete: 'CASCADE' })
 	@JoinColumn({ name: 'permission_id' })
-	permissions: PermissionEntity
+	permission: PermissionEntity
 }

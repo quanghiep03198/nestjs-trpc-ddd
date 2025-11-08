@@ -102,7 +102,7 @@ export class Position1762499120862 implements MigrationInterface {
 
 		// Create unique index on code
 		await queryRunner.createIndex(
-			`${DATABASE_SYSCLOUD}.${DATABASE_SCHEMA}.sc_positions`,
+			this.tableName,
 			new TableIndex({
 				name: 'IDX_POSITION_CODE',
 				columnNames: ['code'],
@@ -112,7 +112,7 @@ export class Position1762499120862 implements MigrationInterface {
 
 		// Create index on department_id
 		await queryRunner.createIndex(
-			`${DATABASE_SYSCLOUD}.${DATABASE_SCHEMA}.sc_positions`,
+			this.tableName,
 			new TableIndex({
 				name: 'IDX_POSITION_DEPARTMENT_ID',
 				columnNames: ['department_id']
@@ -121,7 +121,7 @@ export class Position1762499120862 implements MigrationInterface {
 
 		// Create index on level
 		await queryRunner.createIndex(
-			`${DATABASE_SYSCLOUD}.${DATABASE_SCHEMA}.sc_positions`,
+			this.tableName,
 			new TableIndex({
 				name: 'IDX_POSITION_LEVEL',
 				columnNames: ['level']
@@ -129,23 +129,24 @@ export class Position1762499120862 implements MigrationInterface {
 		)
 
 		// Create foreign key to departments table
-		await queryRunner.createForeignKey(
-			`${DATABASE_SYSCLOUD}.${DATABASE_SCHEMA}.sc_positions`,
-			new TableForeignKey({
-				name: 'FK_POSITION_DEPARTMENT',
-				columnNames: ['department_id'],
-				referencedSchema: DATABASE_SCHEMA,
-				referencedTableName: 'sc_departments',
-				referencedColumnNames: ['id'],
-				onDelete: 'SET NULL',
-				onUpdate: 'CASCADE'
-			})
-		)
+		const departmentTable = await queryRunner.getTable('sc_departments')
+		if (departmentTable)
+			await queryRunner.createForeignKey(
+				this.tableName,
+				new TableForeignKey({
+					name: 'FK_POSITION_DEPARTMENT',
+					columnNames: ['department_id'],
+					referencedSchema: DATABASE_SCHEMA,
+					referencedTableName: 'sc_departments',
+					referencedColumnNames: ['id'],
+					onDelete: 'NO ACTION',
+					onUpdate: 'NO ACTION'
+				})
+			)
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		// Drop foreign key
-		// Drop all foreign keys
+		// * Drop all foreign keys and all foreign keys first
 		const table = await queryRunner.getTable(this.tableName)
 		if (table) {
 			for (const fk of table.foreignKeys) {

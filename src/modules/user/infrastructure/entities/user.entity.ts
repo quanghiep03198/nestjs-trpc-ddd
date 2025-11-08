@@ -1,6 +1,6 @@
 import { DATABASE_SCHEMA, DATABASE_SYSCLOUD } from '@/databases/constants'
 import { BaseAbstractEntity } from '@/modules/_base/base.abstract.entity'
-import { UserRoleEntity } from '@/modules/auth/infrastructure/entities'
+import type { UserRoleEntity } from '@/modules/auth/infrastructure/entities'
 import type { EmployeeEntity } from '@/modules/employee/infrastructure/entities'
 import { compare, genSaltSync, hashSync } from 'bcrypt'
 import { BeforeInsert, Column, Entity, Index, OneToMany, OneToOne } from 'typeorm'
@@ -50,7 +50,7 @@ export class UserEntity extends BaseAbstractEntity {
 	@Column({ type: 'datetime', nullable: true, comment: 'Lần thay đổi mật khẩu cuối' })
 	password_changed_at?: Date
 
-	@OneToMany(() => UserRoleEntity, (userRole) => userRole.user)
+	@OneToMany('UserRoleEntity', 'role')
 	roles: UserRoleEntity[]
 
 	// One-to-One relationship with Employee (if user is an employee)
